@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  presidio:
+    build:
+      context: ./services/presidio
+      dockerfile: Dockerfile
+    ports:
+      - "8001:8001"
+    environment:
+      - API_TOKEN=${API_TOKEN:-dev-token}
+      - PORT=8001
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Add more services here as needed:
+  # ocr:
+  #   build:
+  #     context: ./services/ocr
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "8002:8002"
